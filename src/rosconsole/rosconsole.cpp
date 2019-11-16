@@ -150,23 +150,23 @@ struct SeverityToken : public Token
     (void)line;
     if (level == levels::Fatal)
     {
-      return "FATAL";
+      return "F";
     }
     else if (level == levels::Error)
     {
-      return "ERROR";
+      return "E";
     }
     else if (level == levels::Warn)
     {
-      return "WARN";
+      return "W";
     }
     else if (level == levels::Info)
     {
-      return "INFO";
+      return "I";
     }
     else if (level == levels::Debug)
     {
-      return "DEBUG";
+      return "D";
     }
 
     return "UNKNO";
