@@ -276,6 +276,12 @@ struct FileToken : public Token
 {
   virtual std::string getString(void*, ::ros::console::Level, const char*, const char* file, const char*, int)
   {
+    const size_t max_len = 32;
+    const size_t num_chars = strlen(file);
+    if (num_chars > max_len)
+    {
+      return &file[num_chars - max_len];
+    }
     return file;
   }
 };
