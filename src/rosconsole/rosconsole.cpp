@@ -187,11 +187,13 @@ struct TimeToken : public Token
 
   virtual std::string getString(void*, ::ros::console::Level, const char*, const char*, const char*, int)
   {
+    // TODO(lucasw) make this configurable
+    const size_t decimals = 3;
     std::stringstream ss;
 
     if (format_.empty())
     {
-      ss << ros::WallTime::now();
+      ss << std::fixed << std::setprecision(decimals) << ros::WallTime::now();  // .toSec();
     }
     else
     {
@@ -207,7 +209,7 @@ struct TimeToken : public Token
 
       if (format_.empty())
       {
-        ss << ros::Time::now();
+        ss << ", " << std::fixed << std::setprecision(decimals) << ros::Time::now();  // .toSec();
       }
       else
       {
@@ -230,7 +232,8 @@ struct WallTimeToken : public Token
 
     if (format_.empty())
     {
-      ss << ros::WallTime::now();
+      const size_t decimals = 3;
+      ss << std::fixed << std::setprecision(decimals) << ros::WallTime::now();
     }
     else
     {
