@@ -276,11 +276,20 @@ struct FileToken : public Token
 {
   virtual std::string getString(void*, ::ros::console::Level, const char*, const char* file, const char*, int)
   {
-    const size_t max_len = 32;
+    return file;
+  }
+};
+
+
+struct ShortFileToken : public Token
+{
+  virtual std::string getString(void*, ::ros::console::Level, const char*, const char* file, const char*, int)
+  {
+    const size_t max_len = 30;
     const size_t num_chars = strlen(file);
-    if (num_chars > max_len)
+    if (num_chars > max_len + 3)
     {
-      return &file[num_chars - max_len];
+      return "..." + std::string(&file[num_chars - max_len]);
     }
     return file;
   }
@@ -349,6 +358,10 @@ TokenPtr createTokenFromType(const std::string& type)
   else if (type == "file")
   {
     return TokenPtr(boost::make_shared<FileToken>());
+  }
+  else if (type == "shortfile")
+  {
+    return TokenPtr(boost::make_shared<ShortFileToken>());
   }
   else if (type == "line")
   {
