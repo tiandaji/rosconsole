@@ -193,7 +193,7 @@ struct TimeToken : public Token
 
     if (format_.empty())
     {
-      ss << std::fixed << std::setprecision(decimals) << ros::WallTime::now();  // .toSec();
+      ss << std::fixed << std::setprecision(decimals) << ros::WallTime::now().toSec();
     }
     else
     {
@@ -209,7 +209,7 @@ struct TimeToken : public Token
 
       if (format_.empty())
       {
-        ss << ", " << std::fixed << std::setprecision(decimals) << ros::Time::now();  // .toSec();
+        ss << ", " << std::fixed << std::setprecision(decimals) << ros::Time::now().toSec();
       }
       else
       {
