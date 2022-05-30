@@ -184,7 +184,11 @@ void print(void* handle, ::ros::console::Level level, const char* str, const cha
   log4cxx::Logger* logger  = (log4cxx::Logger*)handle;
   try
   {
+#ifdef LOG4CXX_VERSION_MAJOR
+    logger->forcedLog(g_level_lookup[level], str, log4cxx::spi::LocationInfo(file, log4cxx::spi::LocationInfo::calcShortFileName(file), function, line));
+#else
     logger->forcedLog(g_level_lookup[level], str, log4cxx::spi::LocationInfo(file, function, line));
+#endif
   }
   catch (std::exception& e)
   {
@@ -382,7 +386,7 @@ void shutdown()
   //
   // See https://code.ros.org/trac/ros/ticket/3271
   //
-  static_cast<log4cxx::spi::LoggerRepositoryPtr>(log4cxx::Logger::getRootLogger()->getLoggerRepository())->shutdown();
+  log4cxx::Logger::getRootLogger()->getLoggerRepository()->shutdown();
 }
 
 } // namespace impl
