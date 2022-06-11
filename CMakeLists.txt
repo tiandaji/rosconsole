@@ -67,13 +67,16 @@ ENDIF(${CMAKE_SYSTEM} MATCHES "Darwin-11.*")
 include_directories(include ${catkin_INCLUDE_DIRS} ${rosconsole_backend_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_library(rosconsole_backend_interface src/rosconsole/rosconsole_backend.cpp)
+set_target_properties(rosconsole_backend_interface PROPERTIES VERSION ${rosconsole_VERSION} SOVERSION "3d")
 
 add_library(rosconsole src/rosconsole/rosconsole.cpp)
+set_target_properties(rosconsole PROPERTIES VERSION ${rosconsole_VERSION} SOVERSION "3d")
 target_link_libraries(rosconsole ${rosconsole_backend_LIBRARIES} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 if(ROSCONSOLE_BACKEND STREQUAL "log4cxx")
   add_library(rosconsole_log4cxx src/rosconsole/impl/rosconsole_log4cxx.cpp)
   target_link_libraries(rosconsole_log4cxx rosconsole_backend_interface ${LOG4CXX_LIBRARIES} ${Boost_LIBRARIES})
+  set_target_properties(rosconsole_log4cxx PROPERTIES VERSION ${rosconsole_VERSION} SOVERSION "3d")
 
   if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/speed_test.cpp")
     add_executable(rosconsole_speed_test test/speed_test.cpp)
